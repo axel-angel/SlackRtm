@@ -1,0 +1,12 @@
+Source: slackmqtt
+Maintainer: Daniel Swann <debian@dswann.co.uk>
+Section: misc
+Priority: optional
+Standards-Version: 3.9.2
+Build-Depends: debhelper (>= 9)
+
+Package: slackmqtt
+Architecture: amd64
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Slack <-> MQTT bridge
+ slackmqtt create a bridge between a Slack team and an MQTT broker.
