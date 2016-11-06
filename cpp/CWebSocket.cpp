@@ -157,10 +157,10 @@ int CWebSocket::ws_open()
   info.uid = -1;  
   info.iface = iface;
 
-  context = libwebsocket_create_context(&info);
+  context = lws_create_context(&info);
   if (context == NULL) 
   {
-    dbg(LOG_ERR, "libwebsocket_create_context failed");
+    dbg(LOG_ERR, "lws_create_context failed");
     return -1;
   }
   
@@ -170,10 +170,10 @@ int CWebSocket::ws_open()
   else
     proto = protocol;
   
-  ws = libwebsocket_client_connect_extended(context, address, port, use_ssl, path, address, address, proto, -1, this);
+  ws = lws_client_connect_extended(context, address, port, use_ssl, path, address, address, proto, -1, this);
   if (ws == NULL) 
   {
-    dbg(LOG_ERR, "libwebsocket_client_connect_extended failed");
+    dbg(LOG_ERR, "lws_client_connect_extended failed");
     return -1;
   }
 
@@ -198,7 +198,7 @@ int CWebSocket::ws_send(string s)
   _ws_queue.push(s);
 
   // request a callback to transmit it
-  libwebsocket_callback_on_writable(context, ws);
+  lws_callback_on_writable(context, ws);
   pthread_mutex_unlock(&ws_mutex);
 
   return 0;
@@ -228,14 +228,14 @@ void CWebSocket::service_thread()
   
     while ((n==0) && (status == CONNECTED))
     {
-      n = libwebsocket_service(context, 100);
+      n = lws_service(context, 100);
     }
   
     status = NOT_CONNECTED;
     dbg(LOG_NOTICE, "Websocket disconnected!");
     if (context != NULL)  
     {
-      libwebsocket_context_destroy(context);
+      lws_context_destroy(context);
       context = NULL;
     }
 }
@@ -283,7 +283,7 @@ int CWebSocket::ws_callback(struct libwebsocket_context *wsc, struct libwebsocke
       break;
       
     case LWS_CALLBACK_CLIENT_ESTABLISHED:
-      libwebsocket_callback_on_writable(wsc, wsi);
+      lws_callback_on_writable(wsc, wsi);
       break;
       
     case LWS_CALLBACK_CLIENT_WRITEABLE:
@@ -315,14 +315,14 @@ int CWebSocket::ws_send_pending()
 
   strcpy((char*)(buf+LWS_SEND_BUFFER_PRE_PADDING), s.c_str());
 
-  libwebsocket_write(ws, buf+LWS_SEND_BUFFER_PRE_PADDING, s.length()+1, LWS_WRITE_TEXT);
+  lws_write(ws, buf+LWS_SEND_BUFFER_PRE_PADDING, s.length()+1, LWS_WRITE_TEXT);
 
   free(buf);
   _ws_queue.pop();
 
   // If there's still stuff left to be sent, ask for a callback when we can send it.
   if (_ws_queue.size() > 0)
-    libwebsocket_callback_on_writable(context, ws);
+    lws_callback_on_writable(context, ws);
 
   pthread_mutex_unlock(&ws_mutex);
 }

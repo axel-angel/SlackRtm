@@ -1,7 +1,7 @@
 LDFLAGS=-g -lpthread -lcurl
 
 SLACK_LIB = ../../lib/libslackrtm.a
-INC = -I../../include/ -I../../libwebsockets/build/lib/Headers -I../../libwebsockets/lib -I../../libwebsockets/build
+INC = -I../../include/ -I../../libwebsockets/build/lib/Headers -I../../libwebsockets/lib -I../../libwebsockets/build -I../../libwebsockets
 
 all: SlackMinimal
 

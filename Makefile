@@ -1,7 +1,7 @@
 CPPFLAGS=-g -pthread 
 LDFLAGS=-g -lpthread -lcurl
 
-INC=-I./libwebsockets/build/lib/Headers -I./libwebsockets/lib -I./libwebsockets/build -I./include -I./libwebsockets/lib
+INC=-I./libwebsockets/build/lib/Headers -I./libwebsockets/lib -I./libwebsockets/build -I./include -I./libwebsockets/lib -I./libwebsockets
 LIB=-L./libwebsockets/build/lib
 
 BUILD_DIR = build/
@@ -18,27 +18,27 @@ all: lib examples
 
 lib: $(LIB_DIR)libslackrtm.a
 
-$(BUILD_DIR)CWebSocket.o: $(SRC_DIR)CWebSocket.cpp $(HEAD_DIR)CWebSocket.h libwebsockets/build/lib/libwebsockets.a
+$(BUILD_DIR)CWebSocket.o: $(SRC_DIR)CWebSocket.cpp $(HEAD_DIR)CWebSocket.h libwebsockets/lib/libwebsockets.a
 	g++ $(CPPFLAGS) $(INC) -c $(SRC_DIR)CWebSocket.cpp  $(CC_OUT)
 
-$(BUILD_DIR)CSlackWeb.o: $(SRC_DIR)CSlackWeb.cpp $(HEAD_DIR)CSlackWeb.h libwebsockets/build/lib/libwebsockets.a
+$(BUILD_DIR)CSlackWeb.o: $(SRC_DIR)CSlackWeb.cpp $(HEAD_DIR)CSlackWeb.h libwebsockets/lib/libwebsockets.a
 	g++ $(CPPFLAGS) $(INC) -c $(SRC_DIR)CSlackWeb.cpp  $(CC_OUT)
 	
-$(BUILD_DIR)CSlackWS.o: $(SRC_DIR)CSlackWS.cpp $(HEAD_DIR)CSlackWS.h libwebsockets/build/lib/libwebsockets.a
+$(BUILD_DIR)CSlackWS.o: $(SRC_DIR)CSlackWS.cpp $(HEAD_DIR)CSlackWS.h libwebsockets/lib/libwebsockets.a
 	g++ $(CPPFLAGS) $(INC) -c $(SRC_DIR)CSlackWS.cpp  $(CC_OUT)
 
-$(BUILD_DIR)CSlackRTM.o: $(SRC_DIR)CSlackRTM.cpp $(HEAD_DIR)CSlackRTM.h libwebsockets/build/lib/libwebsockets.a
+$(BUILD_DIR)CSlackRTM.o: $(SRC_DIR)CSlackRTM.cpp $(HEAD_DIR)CSlackRTM.h libwebsockets/lib/libwebsockets.a
 	g++ $(INC) -Wall -c $(SRC_DIR)CSlackRTM.cpp $(CC_OUT)
 
 $(LIB_DIR)slackrtm.a: $(OBJS)
 	ar -cq $(LIB_DIR)slackrtm.a $(OBJS)
 
-libwebsockets/build/lib/libwebsockets.a: 
+libwebsockets/lib/libwebsockets.a: 
 	mkdir -p libwebsockets/build
-	cd libwebsockets/build ; cmake .. ; $(MAKE)
+	cd libwebsockets; cmake .; $(MAKE)
 	
-$(LIB_DIR)libslackrtm.a: $(LIB_DIR)slackrtm.a libwebsockets/build/lib/libwebsockets.a 
-	cp ./libwebsockets/build/lib/libwebsockets.a $(LIB_DIR)libslackrtm.a
+$(LIB_DIR)libslackrtm.a: $(LIB_DIR)slackrtm.a libwebsockets/lib/libwebsockets.a 
+	cp ./libwebsockets/lib/libwebsockets.a $(LIB_DIR)libslackrtm.a
 	ar r $(LIB_DIR)libslackrtm.a $(OBJS)
 
 examples: $(LIB_DIR)libslackrtm.a
