@@ -3,7 +3,7 @@
 
 $script = <<SCRIPT
 apt-get update
-apt-get install -y cmake g++ libjson0-dev libcurl4-gnutls-dev libutfcpp-dev libboost-dev libmosquittopp-dev libmosquitto-dev mosquitto mosquitto-clients build-essential devscripts debhelper git
+apt-get install -y cmake g++ libboost-dev libmosquittopp-dev libutfcpp-dev libcurl4-gnutls-dev libjson-c-dev mosquitto mosquitto-clients build-essential devscripts debhelper git
 
 cd /vagrant
 git submodule update --init --recursive

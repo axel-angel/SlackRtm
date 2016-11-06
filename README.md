@@ -12,23 +12,17 @@ SlackRtm is a very minimal c++ library for the Slack Real Time Messaging protoco
 
 ## Requirements
 
-* Linux; current only tested on Debian Jessie.
-* Required packages: cmake g++ libjson0-dev libcurl4-gnutls-dev libutfcpp-dev libboost-dev libmosquittopp-dev libmosquitto-dev
+* Linux; current only tested on Debian Stretch.
+* Required packages: cmake g++ libboost-dev libmosquittopp-dev libutfcpp-dev libcurl4-gnutls-dev libjson-c-dev
 * A [Vagrantfile](https://www.vagrantup.com/) is included, so a "vagrant up" should be all that's needed to test it
 
 ## slackmqtt
 ### Installation from Source
 Note that the repository includes [libwebsockets](https://libwebsockets.org) as a sub-module, so when cloning the repository, run "git clone --recursive \<URL\>". Alternatively, to download the submodule after cloning, run "git submodule update --init --recursive".
 
-1. Install the required packages: "apt-get install cmake g++ libjson0-dev libcurl4-gnutls-dev libutfcpp-dev libboost-dev libmosquittopp-dev libmosquitto-dev"
-2. After cloning, run "make" in the root
+1. Install the required packages: `apt-get install cmake g++ libboost-dev libmosquittopp-dev libutfcpp-dev libcurl4-gnutls-dev libjson-c-dev`
+2. After cloning, run `make` in the root
 
-### Installation from binary package
-Download the binary package [slackmqtt_0.1-1_amd64.deb](http://daniel1111.github.io/slackmqtt/slackmqtt_0.1-1_amd64.deb), then run:
-```
-dpkg --install slackmqtt_0.1-1_amd64.deb
-apt-get install -f
-```
 ### Usage
 
 1. Get an API token from Slack, goto:
